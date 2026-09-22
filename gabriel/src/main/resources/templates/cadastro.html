@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JurisHome - Criar Conta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen font-sans py-10">
+
+<div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-blue-900">JurisHome</h1>
+        <p class="text-gray-500 mt-2">Crie sua nova conta</p>
+    </div>
+
+    <div th:if="${param.erro}" class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">
+        Atenção: Este e-mail já existe! Use outro ou faça login.
+    </div>
+
+    <form th:action="@{/cadastro}" th:object="${usuario}" method="post" class="space-y-4">
+
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2">Nome Completo</label>
+            <input type="text" th:field="*{nome}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="Digite seu nome" />
+        </div>
+
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2">E-mail</label>
+            <input type="email" th:field="*{email}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="seu@email.com" />
+        </div>
+
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+            <input type="password" th:field="*{senha}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="Crie uma senha forte" />
+        </div>
+
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2">Tipo de Perfil</label>
+            <select th:field="*{tipoUsuario}" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white">
+                <option value="ESTUDANTE">Estudante (Leitor)</option>
+                <option value="JORNALISTA">Jornalista (Criador)</option>
+                <option value="ADMINISTRADOR">Administrador</option>
+            </select>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition duration-200 mt-4">
+            Cadastrar
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a th:href="@{/login}" class="text-sm text-blue-600 hover:underline">Já tem uma conta? Entre aqui</a>
+    </div>
+</div>
+
+</body>
+</html>
