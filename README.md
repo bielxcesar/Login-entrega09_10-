@@ -1,4 +1,4 @@
-# JurisHome - Sistema de Autenticação e Gestão de Utilizadores
+# Entrega dia 09/10 - Sistema de Autenticação e Gestão de Utilizadores Generico
 
 Este projeto é um módulo de segurança e gestão de utilizadores desenvolvido com Java Spring Boot, Thymeleaf e MongoDB Atlas, construído com foco na modularidade e na separação de responsabilidades para futura integração em sistemas mais amplos.
 
