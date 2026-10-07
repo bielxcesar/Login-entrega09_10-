@@ -52,7 +52,7 @@ mvn spring-boot:run
 ```
 Via IDE (IntelliJ IDEA / Eclipse):
 ```bash
-Localize o ficheiro principal da aplicação (GabrielApplication.java) na pasta src/main/java/com/example/gabriel/ e clique em Run.
+Localize o ficheiro principal da aplicação (Application.java) na pasta src/main/java/com/example e clique em Run.
 ```
 ### Passo 4: Acesso ao Sistema
 Quando o servidor iniciar com sucesso (indicado pela mensagem Started [NomeDaAplicação] in X seconds), abra o seu navegador e aceda aos seguintes endereços:

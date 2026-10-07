@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div th:fragment="cabecalho-padrao" class="bg-blue-900 text-white p-4 shadow-md w-full flex justify-between items-center">
+    <div>
+        <h1 class="text-2xl font-bold tracking-wider">Login</h1>
+        <span class="text-xs text-blue-200">Login generico</span>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" class="flex items-center gap-4">
+        <span class="text-sm">Olá, <strong sec:authentication="name"></strong></span>
+        <form th:action="@{/sair}" method="post" class="m-0">
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-1 px-3 rounded transition duration-200">
+                Sair
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

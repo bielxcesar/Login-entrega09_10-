@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Entrar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen font-sans">
+
+<div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-blue-900">Login</h1>
+        <p class="text-gray-500 mt-2">Acesso à Plataforma</p>
+    </div>
+
+    <div th:if="${param.error}" class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">
+        E-mail ou senha incorretos!
+    </div>
+    <div th:if="${param.logout}" class="bg-green-100 text-green-700 p-3 rounded mb-4 text-sm text-center">
+        Você saiu com sucesso. Até logo!
+    </div>
+    <div th:if="${param.sucesso}" class="bg-blue-100 text-blue-700 p-3 rounded mb-4 text-sm text-center">
+        Conta criada! Bem-vindo, pode entrar.
+    </div>
+
+    <form th:action="@{/login}" method="post" class="space-y-5">
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2">E-mail</label>
+            <input type="text" name="username" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="seu@email.com" />
+        </div>
+
+        <div>
+            <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+            <input type="password" name="password" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition duration-200">
+            Entrar
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a th:href="@{/cadastro}" class="text-sm text-blue-600 hover:underline">Ainda não tem conta? Crie agora</a>
+    </div>
+</div>
+
+</body>
+</html>
