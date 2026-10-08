@@ -1,5 +1,6 @@
 package com.example.LoginGenerico.services;
 
+import com.example.LoginGenerico.dto.UsuarioDTO;
 import com.example.LoginGenerico.models.Usuario;
 import com.example.LoginGenerico.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,22 +12,26 @@ import java.time.LocalDateTime;
 @Service
 public class UsuarioService {
 
-
     // Aplicando Bcrypt e segurança
     private BCryptPasswordEncoder combinadorDeSenhas = new BCryptPasswordEncoder();
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // ADICIONE ESTA LINHA: Chama o escrivão
     @Autowired
     private LogService logService;
 
-    public Usuario registarNovoUsuario(Usuario novoUsuario) {
-        if (usuarioRepository.findByEmail(novoUsuario.getEmail()).isPresent()) {
+    public Usuario registarNovoUsuario(UsuarioDTO dto) {
+        if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("Já existe um registo com este e-mail.");
         }
 
-        String senhaSegura = combinadorDeSenhas.encode(novoUsuario.getSenha());
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(dto.getNome());
+        novoUsuario.setEmail(dto.getEmail());
+        novoUsuario.setTipoUsuario(dto.getTipo());
+
+        String senhaSegura = combinadorDeSenhas.encode(dto.getSenha());
         novoUsuario.setSenha(senhaSegura);
         novoUsuario.setCriadoEm(LocalDateTime.now());
         novoUsuario.setAtualizadoEm(LocalDateTime.now());
@@ -37,5 +42,4 @@ public class UsuarioService {
 
         return usuarioSalvo;
     }
-
 }

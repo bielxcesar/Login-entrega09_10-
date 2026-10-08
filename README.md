@@ -30,19 +30,24 @@ Faça o clone deste repositório para a sua máquina local:
 git clone [https://github.com/bielxcesar/Login-entrega09_10-.git](https://github.com/bielxcesar/Login-entrega09_10-.git)
 cd seu-repositorio
 ```
+Passo 2: Configurar a Ligação ao MongoDB Atlas
+Por questões de segurança, as credenciais da base de dados não ficam expostas no código. É necessário criar um ficheiro de variáveis de ambiente local.
+Na pasta raiz do teu projeto (no mesmo nível do ficheiro pom.xml), cria um ficheiro chamado exatamente .env.
+Adiciona a tua Connection String fornecida pelo painel do MongoDB Atlas dentro desse ficheiro:
 
-### Passo 2: Configurar a Ligação ao MongoDB Atlas
-Para que o sistema consiga guardar e acessar aos dados, é necessário fornecer as suas credenciais de acesso ao MongoDB.
+```
+MONGODB_URI=mongodb+srv://<o_teu_utilizador>:<a_tua_senha>@cluster0.x2w3wah.mongodb.net/jurishome?retryWrites=true&w=majority
+````
 
-* Navegue até ao diretório src/main/resources/.
-* Abra o ficheiro application.properties.
-* Adicione a sua Connection String fornecida pelo painel do MongoDB Atlas
+De seguida, navegue até ao diretório src/main/resources/ e abra o ficheiro application.properties.
 
-```bash
+Certifique-se de que ele está configurado para puxar a ligação do ficheiro .env oculto, ficando desta forma:
+```
 spring.application.name=JurisHome
-spring.data.mongodb.uri=mongodb+srv://gabrielfernandeza8_db_user:EuwZwWFfNn20NS18@cluster0.x2w3wah.mongodb.net/jurishome?retryWrites=true&w=majority
+spring.data.mongodb.uri=${MONGODB_URI}
 spring.thymeleaf.cache=false
 ```
+
 ### Passo 3: Executar a Aplicação
 Pode iniciar o servidor localmente através do Maven ou da sua IDE preferida.
 

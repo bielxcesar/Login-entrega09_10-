@@ -1,11 +1,14 @@
 package com.example.LoginGenerico.controllers;
 
-import com.example.LoginGenerico.models.Usuario;
+import com.example.LoginGenerico.dto.UsuarioDTO;
 import com.example.LoginGenerico.services.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -14,30 +17,35 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Mostra a tela de login
     @GetMapping("/login")
     public String exibirTelaLogin() {
         return "login";
     }
 
-    // Mostra a tela de cadastro (entregando a ficha vazia)
     @GetMapping("/cadastro")
     public String exibirTelaCadastro(Model model) {
-        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("usuario", new UsuarioDTO());
         return "cadastro";
     }
 
-    // Processa os dados preenchidos no cadastro
     @PostMapping("/cadastro")
-    public String processarCadastro(Usuario usuario) {
+    public String processarCadastro(
+            @Valid @ModelAttribute("usuario") UsuarioDTO dto,
+            BindingResult result,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "cadastro";
+        }
+
         try {
-            // Tenta fazer o cadastro normalmente
-            usuarioService.registarNovoUsuario(usuario);
+            // Tenta salvar o usuário
+            usuarioService.registarNovoUsuario(dto);
             return "redirect:/login?sucesso";
 
         } catch (RuntimeException erro) {
-            // Se o e-mail já existir, devolve para a tela de cadastro com aviso
-            return "redirect:/cadastro?erro";
+            model.addAttribute("erroEmail", erro.getMessage());
+            return "cadastro";
         }
     }
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>JurisHome - Criar Conta</title>
+    <title>Login - Criar Conta</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen font-sans py-10">
@@ -14,37 +14,46 @@
         <p class="text-gray-500 mt-2">Crie sua nova conta</p>
     </div>
 
+    <!-- Erro de regra de negSócio (ex: e-mail vindo da URL /cadastro?erro) -->
     <div th:if="${param.erro}" class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center">
         Atenção: Este e-mail já existe! Use outro ou faça login.
+    </div>
+
+    <!-- Erro retornado pela exceção no controller via model -->
+    <div th:if="${erroEmail}" class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm text-center" th:text="${erroEmail}">
     </div>
 
     <form th:action="@{/cadastro}" th:object="${usuario}" method="post" class="space-y-4">
 
         <div>
             <label class="block text-gray-700 text-sm font-bold mb-2">Nome Completo</label>
-            <input type="text" th:field="*{nome}" required
+            <input type="text" th:field="*{nome}"
                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="Digite seu nome" />
+            <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-red-500 text-xs mt-1"></p>
         </div>
 
         <div>
             <label class="block text-gray-700 text-sm font-bold mb-2">E-mail</label>
-            <input type="email" th:field="*{email}" required
+            <input type="email" th:field="*{email}"
                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="seu@email.com" />
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 text-xs mt-1"></p>
         </div>
 
         <div>
             <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
-            <input type="password" th:field="*{senha}" required
+            <input type="password" th:field="*{senha}"
                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500" placeholder="Crie uma senha forte" />
+            <p th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="text-red-500 text-xs mt-1"></p>
         </div>
 
         <div>
             <label class="block text-gray-700 text-sm font-bold mb-2">Tipo de Perfil</label>
-            <select th:field="*{tipoUsuario}" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white">
+            <select th:field="*{tipo}" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white">
                 <option value="ESTUDANTE">Estudante (Leitor)</option>
                 <option value="JORNALISTA">Jornalista (Criador)</option>
                 <option value="ADMINISTRADOR">Administrador</option>
             </select>
+            <p th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}" class="text-red-500 text-xs mt-1"></p>
         </div>
 
         <button type="submit" class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition duration-200 mt-4">
